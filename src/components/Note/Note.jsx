@@ -1,43 +1,28 @@
-import './Note.css'
-import { useState } from 'react'
+import "./Note.css";
 
+function Note(props) {
+  const { note, onDeleteNote } = props;
 
+  const date = new Date().toDateString();
 
-function Note({ note, noteArray, setArray, id , index , deleteItem }) {
-    const date = new Date().toDateString()
+  const handleDelete = () => {
+    onDeleteNote(note.id);
+  };
 
+  return (
+    <div className="note-card">
+      <div className="title-date">
+        <h4 className="note__title">{note.noteTitle}</h4>
+        <small className="note__date">{date}</small>
+      </div>
 
+      <p>{note.noteInput}</p>
 
-    
-    // set items to an array that doesn’t include the item in items at index.
-    // const deleteItem = (index) => {
-    //     setArray(noteArray.filter((note) => indexOf(note) !== note[index]));
-    // };
-
-    // const deleteItem = () => {
-    //     setArray(noteArray.filter((note , index) => note.id !== note[index].id));
-    // };
-
-    const handleDelete = () => {
-        deleteItem(id)
-    }
-
-
-
-
-
-    return (
-        <>
-            <div className="note-card">
-                <span className='title-date'><h4 className='note__title'>{note.noteTitle}</h4><small className='note__date'>{date}</small></span>
-                <p>{note.noteInput}</p>
-                <span onClick={handleDelete} className='delete-btn'>X</span>
-
-            </div>
-        </>
-    )
+      <button onClick={handleDelete} className="delete-btn">
+        X
+      </button>
+    </div>
+  );
 }
 
-
-
-export default Note
+export default Note;

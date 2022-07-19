@@ -1,51 +1,33 @@
-
-import './App.css'
-import NoteForm from './components/NoteForm/NoteForm'
-import { useState } from 'react'
-import NoteContainer from './components/NoteForm/NoteContainer'
+import "./App.css";
+import NoteForm from "./components/NoteForm/NoteForm";
+import { useState } from "react";
+import NoteContainer from "./components/Note/NoteContainer";
 
 function App() {
-   const [noteArray, setArray] = useState([])
+  const [notes, setNotes] = useState([]);
 
-   console.log(noteArray);
+  const onAddNote = (noteInput) => {
+    setNotes((oldArray) => [...oldArray, noteInput]);
+  };
 
-   const saveUserData = (noteInput) => {
-      setArray(oldArray => [...oldArray, noteInput]);
-   }
+  const onDeleteNote = (id) => {
+    if (window.confirm("Delete the item?")) {
+      const copyNotes = [...notes];
+      setNotes(copyNotes.filter((note) => note.id !== id));
+    }
+  };
 
-   const deleteItem = (id) => {
-      if (window.confirm("Delete the item?")) {
-         const filtered = [...noteArray]
-         setArray(filtered.filter((note, index) => note.id !== id));
+  return (
+    <div className="App-Card">
+      <h1>Notes</h1>
 
-      }
+      <NoteForm onAddNote={onAddNote} />
 
-      else {
-          return 
-      }
-   }
-
-
-
-
-
-
-
-   return (
-      <div className='App-Card'>
-         <h1>Notes</h1>
-         <NoteForm saveUserData={saveUserData} />
-         <div className='notes__container'>
-            <NoteContainer noteArray={noteArray} setArray={setArray} id={noteArray.id} deleteItem={deleteItem} />
-
-         </div>
-
-
-
+      <div className="notes__container">
+        <NoteContainer notes={notes} onDeleteNote={onDeleteNote} />
       </div>
-   );
-
-
-};
+    </div>
+  );
+}
 
 export default App;
